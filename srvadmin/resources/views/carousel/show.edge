@@ -1,0 +1,140 @@
+@layout('layouts/main')
+@section('body')
+<div class="flex justify-between relative py-4">
+    <h1 class="text-xl">ເລື່ອນສະແດງ</h1>
+    <div>
+        <a href="{{ route('CarouselCreate') }}"
+            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ເພີ່ມໃໝ່</a>
+    </div>
+</div>
+<section>
+    <div>
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        ຫົວຂໍ້
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ໝວດໝູ່
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ຕຳແໜ່ງສະແດງ
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(t in carousels)
+                <tr class="border-b hover:bg-gray-100">
+                    <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                        <img class="w-10 h-10 rounded-md" src="/srvcontroller{{t.background}}" alt="Jese image">
+                        <div class="pl-3">
+                            <a href="{{route('ViewCarouselDetail',{id:t.id})}}"
+                                class="text-gray-800 font-semibold">{{t.title}}</a>
+                            <div class="flex gap-2">
+                                <div class="flex gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                        class="w-4 h-4 fill-gray-500" viewBox="0 0 48 48">
+                                        <path
+                                            d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 23.476562 11.978516 A 1.50015 1.50015 0 0 0 22 13.5 L 22 25.5 A 1.50015 1.50015 0 0 0 23.5 27 L 31.5 27 A 1.50015 1.50015 0 1 0 31.5 24 L 25 24 L 25 13.5 A 1.50015 1.50015 0 0 0 23.476562 11.978516 z">
+                                        </path>
+                                    </svg>
+                                    <p class="text-xs text-gray-500">{{t.createdAt}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                    <td class="px-6 py-4">
+                        {{t.module}}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            {{t.ptype?.title || ''}}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 flex gap-2 justify-between">
+                        <div>
+
+                        </div>
+                        <div>
+                            <a href="{{route('CarouselCreate',{qs:{typ:'edit',id:t.id}})}}"
+                                class="inline-flex items-center px-2 py-2 text-sm font-medium text-center text-white bg-gray-200 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-4 h-4"
+                                    viewBox="0 0 48 48">
+                                    <path
+                                        d="M 36 5.0097656 C 34.205301 5.0097656 32.410791 5.6901377 31.050781 7.0507812 L 8.9160156 29.183594 C 8.4960384 29.603571 8.1884588 30.12585 8.0253906 30.699219 L 5.0585938 41.087891 A 1.50015 1.50015 0 0 0 6.9121094 42.941406 L 17.302734 39.974609 A 1.50015 1.50015 0 0 0 17.304688 39.972656 C 17.874212 39.808939 18.39521 39.50518 18.816406 39.083984 L 40.949219 16.949219 C 43.670344 14.228094 43.670344 9.7719064 40.949219 7.0507812 C 39.589209 5.6901377 37.794699 5.0097656 36 5.0097656 z M 36 7.9921875 C 37.020801 7.9921875 38.040182 8.3855186 38.826172 9.171875 A 1.50015 1.50015 0 0 0 38.828125 9.171875 C 40.403 10.74675 40.403 13.25325 38.828125 14.828125 L 36.888672 16.767578 L 31.232422 11.111328 L 33.171875 9.171875 C 33.957865 8.3855186 34.979199 7.9921875 36 7.9921875 z M 29.111328 13.232422 L 34.767578 18.888672 L 16.693359 36.962891 C 16.634729 37.021121 16.560472 37.065723 16.476562 37.089844 L 8.6835938 39.316406 L 10.910156 31.521484 A 1.50015 1.50015 0 0 0 10.910156 31.519531 C 10.933086 31.438901 10.975086 31.366709 11.037109 31.304688 L 29.111328 13.232422 z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <button type="button" onclick="DeleteProduct({{t.id}})"
+                                class="inline-flex items-center px-2 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @endeach
+            </tbody>
+        </table>
+    </div>
+</section>
+@end
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function DeleteProduct(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'ທ່ານແນ່ໃຈລົບບໍ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ແມ່ນ ຕ້ອງການ',
+            cancelButtonText: 'ຍົກເລີກ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/srvcontroller/api/v1/carousel/${id}`, {
+                    method: 'delete'
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        swalWithBootstrapButtons.fire(
+                            'ຢືນຢັນລົບ',
+                            'ຂ້ໍມູນຖືກລົບສຳເລັດແລ້ວ',
+                            'success'
+                        )
+                        setTimeout(()=> {
+                            window.location.reload()
+                        },1000)
+                    })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+                setTimeout(()=> {
+                            window.location.reload()
+                        },1000)
+            }
+        })
+    }
+</script>
+@end

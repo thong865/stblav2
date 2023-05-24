@@ -1,0 +1,47 @@
+@layout('layouts/none')
+@set('title','Login')
+@section('body')
+<section class="h-screen">
+  <div class="h-full">
+    <!-- Left column container with background-->
+    <div class="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+      <div class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+        <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="w-full"
+          alt="Sample image" />
+      </div>
+
+      <!-- Right column container -->
+      <div class="mb-12 w-full md:max-w-[620px]">
+        <h1 class="text-center text-3xl py-10">ເຂົ້າສູ່ລະບົບ</h1>
+        <form class="px-10" action="{{route('WebLogin')}}" method="POST">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Email / Mobile</span>
+            </label>
+            <input type="text" placeholder="Email or mobile" name="username" class="input input-bordered w-full" />
+            <label class="label">
+              <span class="label-text-alt">Bottom Left label</span>
+            </label>
+          </div>
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">password</span>
+            </label>
+            <input type="text" placeholder="password" name="password" class="input input-bordered w-full" />
+            <label class="label">
+              <span class="label-text-alt">Bottom Left label</span>
+            </label>
+          </div>
+          <div class="text-center lg:text-left mt-5">
+            <button type="submit"
+              class="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+              data-te-ripple-init data-te-ripple-color="light">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+@end

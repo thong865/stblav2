@@ -1,0 +1,12 @@
+<div class="modal-box w-11/12 max-w-1xl">
+    <h3 class="font-bold text-lg">{{title ? title :'ເພີ່ມໝວດໝູ່'}}</h3>
+    <div class="mt-5">
+        <input type="number" value="{{category?.id || ''}}" id="cateinpid" class="hidden">
+        <input type="text" placeholder="" class="input input-bordered input-primary w-full" id="title"
+            value="{{category?.title || ''}}" />
+    </div>
+    <div class="modal-action">
+        <button type="button" onclick="{{action == 'edit' ? 'updateCategory()':'CreateCategory()'}}" class="btn btn-primary">ບັນທຶກ</button>
+        <label for="modalCategory" class="btn btn-error">ຍົກເລີກ</label>
+    </div>
+</div>

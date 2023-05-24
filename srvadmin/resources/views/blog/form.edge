@@ -1,0 +1,210 @@
+@layout('layouts/main')
+
+@section('body')
+<section>
+    <h1 class="text-xl py-2">ເພີ່ມຂ່າວສານໃໝ່</h1>
+    <form action="{{route('blogsCreate')}}" method="POST" enctype="multipart/form-data">
+        <div class="flex items-center justify-center">
+            <div class="mx-auto w-full px-5">
+                <input type="hidden" name="module" value="POST">
+                <div class="mb-5">
+                    <label for="title" class="mb-3 block text-base font-medium text-[#07074D]">
+                        ຫົວຂໍ້
+                    </label>
+                    <input type="text" name="title" id="title" placeholder="ຫົວຂໍ້ ຂອງເນື້ອຫາ"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    {{-- @if(flashMessages.has('errors.title'))
+                    <p> {{ flashMessages.get('errors.title') }} </p>
+                    @endif --}}
+                </div>
+                <div class="mb-5">
+                    <label for="content" class="mb-3 block text-base font-medium text-[#07074D]">
+                        ເນື້ອຫາ
+                    </label>
+                    <textarea id="editor" name="content"></textarea>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ບັນທຶກ</button>
+                </div>
+            </div>
+            <div class="w-[320px] px-5 py-5 border shadow rounded-xl">
+                <div>
+                    Option
+                    <div class="mb-5 w-full">
+                        <label for="blogtype" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ປະເພດ
+                        </label>
+                        <select class="w-full border" name="ptype" id="blogtype">
+                            @each(p in pstype)
+                            <option value="{{p.id}}">{{p.title}}</option>
+                            @endeach
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    SEO
+                </div>
+                <div>
+                    <div class="mb-5 w-full">
+                        <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ຄຳອະທິບາຍສັ້ນ
+                        </label>
+                        <textarea class="border w-full" name="shortDesc"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div>ຮູບພາບພື້ນຫຼັງ</div>
+                    <input type="file" id="bgUpload" class="hidden" name="background">
+                    <label for="bgUpload">
+                        <div class="border-2 text-center py-5 hover:border-red">
+                            <div>+</div>
+                            <div>ອັບໂຫຼດຮູບພາບ</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+@section('script')
+<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/super-build/ckeditor.js"></script>
+<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+<script>
+    function MyCustomUploadAdapterPlugin( editor ) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                return new MyUploadAdapter( loader );
+            };
+        }
+                CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                        'sourceEditing'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                ckfinder:{
+                    uploadUrl:'/upload'
+                },
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'ຫົວຂໍ້ລະດັບ 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'ຫົວຂໍ້ລະດັບ 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'ຫົວຂໍ້ລະດັບ 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'ຫົວຂໍ້ລະດັບ 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'ຫົວຂໍ້ລະດັບ 5', class: 'ck-heading_heading5' },
+                        { model: 'heading6', view: 'h6', title: 'ຫົວຂໍ້ລະດັບ 6', class: 'ck-heading_heading6' }
+                    ]
+                },
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                fontSize: {
+                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+                    supportAllValues: true
+                },
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                mention: {
+                    feeds: [
+                        {
+                            marker: '@',
+                            feed: [
+                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                                '@sugar', '@sweet', '@topping', '@wafer'
+                            ],
+                            minimumCharacters: 1
+                        }
+                    ]
+                },
+              
+                // The "super-build" contains more premium features that require additional configuration, disable them below.
+                // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                removePlugins: [
+                    // 'CKFinder',
+                    'EasyImage',
+                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                    // Storing images as Base64 is usually a very bad idea.
+                    // Replace it on production website with other solutions:
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                    // 'Base64UploadAdapter',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                    // from a local file system (file://) - load this site via HTTP server if you enable MathType
+                    'MathType'
+                ]
+            });
+
+        var efile = document.getElementById('bgUpload')
+        efile.addEventListener('change',(e)=> {
+            console.log(e.target.files[0])
+        })
+        
+</script>
+@endsection
+@end

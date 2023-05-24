@@ -1,0 +1,14 @@
+@layout('layouts/main')
+@set('title','ລາຍລະອຽດ')
+@section('body')
+<div class="flex justify-between">
+    <a class="btn btn-warning" href="/srvcontroller/carousel">ຍ້ອນກັບ</a>
+    <div class="flex gap-2"><a href="{{route('CarouselCreate',{qs:{typ:'edit',id:carousel?.id}})}}"
+            class="btn btn-warning">ແກ້ໄຂ</a>
+    </div>
+</div>
+<div>
+    <img src="/srvcontroller{{carousel?.background}}" class="rounded-xl mt-5"/>
+    <div class="mt-3">{{{carousel?.content}}}</div>
+</div>
+@end

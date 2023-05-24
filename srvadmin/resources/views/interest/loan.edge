@@ -1,0 +1,58 @@
+@layout('layouts/main')
+@set('arr_ccy',['LAK','USD','THB'])
+@set('arr_class',['A','B','C','D'])
+@section('body')
+<div class="flex justify-between relative py-4">
+    <h1 class="text-xl">ອັດຕາດອກເບ້ຍເງິນກູ້</h1>
+    <div>
+        <a href="/blogs/frm" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">create</a>
+    </div>
+</div>
+
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" rowspan="2" class="px-6 py-3">
+                    ຫົວຂໍ້
+                </th>
+                <th scope="col" colspan="4" class="px-6 py-3 text-center">
+                    ກີບ
+                </th>
+                <th scope="col" colspan="4" class="px-6 py-3 text-center">
+                    ໂດລາ
+                </th>
+                <th scope="col" colspan="4" class="px-6 py-3 text-center">
+                    ບາດ
+                </th>
+            </tr>
+            <tr>
+                @each((cii,iic) in arr_ccy)
+                    @each((ci,ic) in arr_class)
+                    <th scope="col" class="px-6 py-3">
+                        {{ci}}
+                    </th>
+                    @endeach
+                @endeach
+            </tr>
+        </thead>
+        <tbody>
+            @each(t in dt)
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{t.title}}
+                </th>
+                {{--  @each((ci,ic) in arr_ccy)  --}}
+                @each((si,i) in t.irate)
+                <td class="px-6 py-4">
+                    {{si.rate}}
+                </td>
+                @endeach
+            </tr>
+            @endeach
+        </tbody>
+    </table>
+    
+</div>
+
+@end

@@ -1,0 +1,43 @@
+@layout('layouts/main')
+
+@section('body')
+
+<section>
+    <div class="flex">
+        <div class="flex-1">ລາຍງານ</div>
+        <div><a href="{{ route('reportCreate') }}" class="py-2 px-5 border rounded-xl">create</a></div>
+    </div>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <th scope="col" class="px-6 py-3">ຫົວຂໍ້</th>
+                <th scope="col" class="px-6 py-3">ປະເພດເນື້ອຫາ</th>
+                <th scope="col" class="px-6 py-3">ອັບໂຫຼດໂດຍ</th>
+                <th scope="col" class="px-6 py-3">ວັນທີເດືອນປີ</th>
+            </thead>
+            <tbody>
+                @each(t in reports)
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700 hover:bg-gray-700">
+                    <td cope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div class="flex">
+                            <div>
+                                <img src="https://img.icons8.com/office/512/pdf.png" class="w-8" alt="" />
+                            </div>
+                            <div>
+                                <a href="">{{t.title}}</a>
+                                <div class="text-sm">
+                                    <span>12/10/2022</span> | <a href="">Download</a> | view
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">{{t.module}}</td>
+                    <td class="text-left"></td>
+                    <td class="text-right">{{t.crated_at}}</td>
+                </tr>
+                @endeach
+            </tbody>
+        </table>
+    </div>
+</section>
+@end

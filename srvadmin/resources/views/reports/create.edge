@@ -1,0 +1,68 @@
+@layout('layouts/main')
+
+@section('body')
+
+<section>
+    <form action="{{route('blogsCreate')}}" method="POST">
+        <div>
+            <div></div>
+            <div></div>
+        </div>
+        <div>
+            <div class="flex items-center justify-center p-12">
+                <div class="mx-auto w-full max-w-[550px]">
+
+                    <label
+                        class="w-full flex flex-col items-center px-4 py-4 bg-white text-blue rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+                        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                        </svg>
+                        <span class="mt-2 text-base leading-normal">ເລືອກຟາຍອັບໂຫຼດ</span>
+                        <input type='file' class="hidden" name="background" />
+                    </label>
+                    <div class="mb-5 mt-5">
+                        <label for="title" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ຫົວຂໍ້ (ພາສາລາວ)
+                        </label>
+                        <input type="text" name="title" id="title" value="ລາຍງານ ສະຖານະການເງິນ ໄຕມາດ"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ຫົວຂໍ້ (ອັງກິດ)
+                        </label>
+                        <input type="text" name="email" value="Quarter Report" id="email"
+                            placeholder="example@domain.com"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="subject" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ໄຕມາດ
+                        </label>
+                        <input type="number" name="subject" id="subject" placeholder="Enter your subject" maxlength="4"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="subject" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ປະຈຳປີ
+                        </label>
+                        <input type="number" name="subject" id="subject" placeholder="Enter your subject" maxlength="4"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div>
+                        <button
+                            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                            ຍົກເລີກ
+                        </button>
+                        <button
+                            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                            ບັນທຶກ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+@end

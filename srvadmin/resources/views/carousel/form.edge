@@ -1,0 +1,232 @@
+@layout('layouts/main')
+@set('title','ຕະຫຼາດ STBank')
+@section('body')
+<section>
+    <h1 class="text-xl">ເພີ່ມຮູບພາບສະໄລ້</h1>
+    <div></div>
+    <form action="{{route(frmType == 'edit' ? 'UpdateCarousel':'blogsCreate',{params:{id:carousel?.id}})}}{{frmType == 'edit' ? '?_method=PUT':''}}" method="POST" enctype="multipart/form-data" class="mt-5">
+        <input type="hidden" name="module" value="CRSO">
+        <input type="hidden" name="id" value="{{carousel?.id || ''}}">
+        <div class="flex items-center justify-center">
+            <div class="mx-auto w-full px-5">
+                <div class="mb-5">
+                    <label for="title" class="mb-3 block text-base font-medium text-[#07074D]">
+                        ຫົວຂໍ້
+                    </label>
+                    <input type="text" name="title" id="title" placeholder="ຫົວຂໍ້ ຂອງເນື້ອຫາ"
+                        value="{{carousel?.title || ''}}"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    {{-- @if(flashMessages.has('errors.title'))
+                    <p> {{ flashMessages.get('errors.title') }} </p>
+                    @endif --}}
+                </div>
+                <div class="mb-5">
+                    <label for="content" class="mb-3 block text-base font-medium text-[#07074D]">
+                        ເນື້ອຫາ
+                    </label>
+                    <textarea id="editor" name="content">{{carousel?.content || ''}}</textarea>
+                </div>
+                <div>
+                    <button
+                        class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                        ບັນທຶກ
+                    </button>
+                </div>
+
+            </div>
+            <div class="w-[320px] px-5 py-5 border shadow rounded-xl">
+                <div>
+                    Option
+                    <div class="mb-5 w-full">
+                        <label for="blogtype" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ສະແດງໃນໜ້າ
+                        </label>
+                        <select class="w-full border" name="slug" id="blogtype">
+                            @each(p in pstype)
+                                @if(carousel && String(carousel.slug || '').trim() == String(p.slug || '').trim())
+                                    <option value="{{String(p.slug || '').trim()}}" selected>{{p.title}}</option>
+                                @else
+                                    <option value="{{String(p.slug || '').trim()}}">{{p.title}} {{p.slug}}</option>
+                                @endif
+                            @endeach
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    SEO
+                </div>
+                <div>
+                    <div class="mb-5 w-full">
+                        <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
+                            ຄຳອະທິບາຍສັ້ນ
+                        </label>
+                        <textarea class="border w-full" name="shortDesc">{{carousel?.shortDesc || ''}}</textarea>
+                    </div>
+                </div>
+                <div>
+                    <div>ຮູບພາບພື້ນຫຼັງ</div>
+                    @if(String(carousel?.background || '').trim() != '')
+                    <input type="text" id="bgUpload" class="hidden" name="background" value="{{carousel?.background || ''}}">
+                    <img src="/srvcontroller{{carousel?.background}}" class="rounded-xl mt-5" />
+                    @else
+                    <input type="text" name="background" id="iBackground" class="hidden">
+                    <input type="file" onchange="BackgroundUpload(event)" id="bgUpload" class="hidden" >
+                    <label for="bgUpload" id="forDropFile">
+                        <div class="border-2 text-center py-5 hover:border-red">
+                            <div>+</div>
+                            <div>ອັບໂຫຼດຮູບພາບ</div>
+                        </div>
+                    </label>
+                    @endif
+                    <div id="showbackground"></div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+@end
+@section('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/super-build/ckeditor.js"></script>
+<script>
+    CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        toolbar: {
+            items: [
+                'heading', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo',
+                '-',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'alignment', '|',
+                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                'sourceEditing'
+            ],
+            shouldNotGroupWhenFull: true
+        },
+        list: {
+            properties: {
+                styles: true,
+                startIndex: true,
+                reversed: true
+            }
+        },
+        heading: {
+            options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'ຫົວຂໍ້ລະດັບ 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'ຫົວຂໍ້ລະດັບ 2', class: 'ck-heading_heading2' },
+                { model: 'heading3', view: 'h3', title: 'ຫົວຂໍ້ລະດັບ 3', class: 'ck-heading_heading3' },
+                { model: 'heading4', view: 'h4', title: 'ຫົວຂໍ້ລະດັບ 4', class: 'ck-heading_heading4' },
+                { model: 'heading5', view: 'h5', title: 'ຫົວຂໍ້ລະດັບ 5', class: 'ck-heading_heading5' },
+                { model: 'heading6', view: 'h6', title: 'ຫົວຂໍ້ລະດັບ 6', class: 'ck-heading_heading6' }
+            ]
+        },
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif'
+            ],
+            supportAllValues: true
+        },
+        fontSize: {
+            options: [10, 12, 14, 'default', 18, 20, 22],
+            supportAllValues: true
+        },
+        htmlSupport: {
+            allow: [
+                {
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }
+            ]
+        },
+        htmlEmbed: {
+            showPreviews: true
+        },
+        link: {
+            decorators: {
+                addTargetToExternalLinks: true,
+                defaultProtocol: 'https://',
+                toggleDownloadable: {
+                    mode: 'manual',
+                    label: 'Downloadable',
+                    attributes: {
+                        download: 'file'
+                    }
+                }
+            }
+        },
+        mention: {
+            feeds: [
+                {
+                    marker: '@',
+                    feed: [
+                        '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                        '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                        '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                        '@sugar', '@sweet', '@topping', '@wafer'
+                    ],
+                    minimumCharacters: 1
+                }
+            ]
+        },
+
+        // The "super-build" contains more premium features that require additional configuration, disable them below.
+        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+        removePlugins: [
+            // 'CKFinder',
+            'EasyImage',
+            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+            // Storing images as Base64 is usually a very bad idea.
+            // Replace it on production website with other solutions:
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+            // 'Base64UploadAdapter',
+            'RealTimeCollaborativeComments',
+            'RealTimeCollaborativeTrackChanges',
+            'RealTimeCollaborativeRevisionHistory',
+            'PresenceList',
+            'Comments',
+            'TrackChanges',
+            'TrackChangesData',
+            'RevisionHistory',
+            'Pagination',
+            'WProofreader',
+            // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+            // from a local file system (file://) - load this site via HTTP server if you enable MathType
+            'MathType'
+        ]
+    });
+    function BackgroundUpload(event) {
+        const file = event.target.files[0];
+        var formData = new FormData();
+        formData.append('upload', file);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', `/srvcontroller/upload`, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                let dt = JSON.parse(xhr.response)
+                document.getElementById('iBackground').setAttribute('value', dt.url)
+                document.getElementById('showbackground').innerHTML = `<img src='/srvcontroller${dt.url}' class='max-h-[156px]'/>`
+                document.getElementById('forDropFile').classList.add('hidden')
+            } else {
+                console.log('Error uploading image');
+            }
+        };
+        xhr.send(formData);
+    }
+</script>
+@endsection

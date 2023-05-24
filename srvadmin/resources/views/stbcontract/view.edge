@@ -1,0 +1,54 @@
+@layout('layouts/main')
+@section('body')
+<section class="py-5">
+    <div class="flex justify-between">
+        <h1 class="text-xl">ຂໍ້ມູນຕິດຕໍ່</h1>
+        <div>
+            <a href="{{route('createStcontract')}}"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ເພີ່ມໃໝ່</a>
+        </div>
+    </div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full mt-5">
+        <table class=" text-sm text-left text-gray-500 bg-white  w-full">
+            <thead class="text-xs text-gray-700 uppercase bg-white text-gray-500 ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        ຫົວຂໍ້
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ຂໍ້ມູນ
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ປະເພດ
+                    </th>
+                    <th scope="col" class="px-6 py-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(t in contracts)
+                <tr class="bg-white border-b dark:border-gray-700">
+                    <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap flex">
+                        <div class="pl-3">
+                            <p class="pl-1">{{t.title}}</p>
+                        </div>
+                    </th>
+                    <td class="px-6 py-4">
+                        {{t.value}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{t.type}}
+                    </td>
+                    <td class="px-6 py-4 flex gap-5">
+                        <a href="/srvcontroller/stbcontract/frm?typ=edit&id={{t.id}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <form method="POST" action="{{route('deleteContract',{qs:{id:t.id}})}}">
+                            <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endeach
+            </tbody>
+        </table>
+    </div>
+</section>
+@end

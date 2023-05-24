@@ -1,0 +1,176 @@
+@layout('layouts/main')
+@set('title','ຕະຫຼາດ STBank')
+@section('body')
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex items-center justify-between px-5 py-4 ">
+        <div>
+            <div id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+                class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5"
+                type="button">
+                ໝວດໝູ່ສິນຄ້າ
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <div>
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input type="text" id="table-search-users"
+                        class="block px-2 py-[13px] pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="ຄົ້ນຫາ ໝວດໝູ່ສິນຄ້າ">
+                </div>
+            </div>
+            <label for="modalCategory" class="btn btn-primary btn-md">ເພີ່ມໃໝ່</label>
+        </div>
+
+
+    </div>
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    ຫົວຂໍ້
+                </th>
+                <th scope="col" class="px-6 py-3">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(t in category)
+            <tr class="border-b hover:bg-gray-100">
+                <th>
+                    <p class="text-gray-900 px-5">{{t.title}}</p>
+                </th>
+                <td class="px-6 py-1 flex gap-2 justify-between">
+                    <div></div>
+                    <div>
+                        <label for="modalCategory" onclick="OpenCategory({{t.id}})"
+                            class="inline-flex items-center px-2 py-2 text-sm font-medium text-center text-white bg-gray-200 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="w-4 h-4" viewBox="0 0 48 48">
+                                <path
+                                    d="M 36 5.0097656 C 34.205301 5.0097656 32.410791 5.6901377 31.050781 7.0507812 L 8.9160156 29.183594 C 8.4960384 29.603571 8.1884588 30.12585 8.0253906 30.699219 L 5.0585938 41.087891 A 1.50015 1.50015 0 0 0 6.9121094 42.941406 L 17.302734 39.974609 A 1.50015 1.50015 0 0 0 17.304688 39.972656 C 17.874212 39.808939 18.39521 39.50518 18.816406 39.083984 L 40.949219 16.949219 C 43.670344 14.228094 43.670344 9.7719064 40.949219 7.0507812 C 39.589209 5.6901377 37.794699 5.0097656 36 5.0097656 z M 36 7.9921875 C 37.020801 7.9921875 38.040182 8.3855186 38.826172 9.171875 A 1.50015 1.50015 0 0 0 38.828125 9.171875 C 40.403 10.74675 40.403 13.25325 38.828125 14.828125 L 36.888672 16.767578 L 31.232422 11.111328 L 33.171875 9.171875 C 33.957865 8.3855186 34.979199 7.9921875 36 7.9921875 z M 29.111328 13.232422 L 34.767578 18.888672 L 16.693359 36.962891 C 16.634729 37.021121 16.560472 37.065723 16.476562 37.089844 L 8.6835938 39.316406 L 10.910156 31.521484 A 1.50015 1.50015 0 0 0 10.910156 31.519531 C 10.933086 31.438901 10.975086 31.366709 11.037109 31.304688 L 29.111328 13.232422 z">
+                                </path>
+                            </svg>
+                        </label>
+                        <button onclick="DeleteCategory({{t.id}})"
+                            class="inline-flex items-center px-2 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                </td>
+            </tr>
+            @endeach
+        </tbody>
+    </table>
+</div>
+    @!component('components/form/CategoryForm')
+@end
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function CreateCategory() {
+            let el = document.getElementById('title').value
+            fetch('/srvcontroller/api/v1/markets/category', {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({ title: el, lang: 'la' })
+            }).then((response) => response.json())
+                .then((result) => {
+                    window.location.href = '/srvcontroller/stbmarket/category'
+                })
+        }
+
+        function OpenCategory(id) {
+            let el = document.getElementById('title').value
+            fetch(`/srvcontroller/api/v1/markets/category/${id}/compfind`).then((response) => response.text())
+                .then((result) => {
+                    document.getElementById('cateModalForm').innerHTML = result
+                })
+        }
+        function updateCategory() {
+            let el = document.getElementById('title').value
+            let id = document.getElementById('cateinpid').value
+            fetch(`/srvcontroller/api/v1/markets/category/${id}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify({ title: el, lang: 'la' })
+            }).then((response) => response.json())
+                .then((result) => {
+                    Swal.fire(
+                    'ສຳເລັດ',
+                    'success'
+                    )
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000)
+                })
+        }
+
+        function DeleteCategory(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'ທ່ານແນ່ໃຈລົບບໍ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'ແມ່ນ ຕ້ອງການ',
+                cancelButtonText: 'ຍົກເລີກ',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/srvcontroller/api/v1/markets/category/${id}`, {
+                        method: 'delete'
+                    })
+                        .then((response) => response.json())
+                        .then((response) => {
+                            swalWithBootstrapButtons.fire(
+                                'ຢືນຢັນລົບ',
+                                'ຂ້ໍມູນຖືກລົບສຳເລັດແລ້ວ',
+                                'success'
+                            )
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 1000)
+                        })
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'ຍົກເລີກ'
+                    )
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000)
+                }
+            })
+        }
+</script>
+@end

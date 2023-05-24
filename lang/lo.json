@@ -1,0 +1,11 @@
+{
+    "button": {
+      "search":"ຄົ້ນຫາ"
+    },
+    "form":{
+        "search_all":"ທັງໝົດ",
+        "search_province":"ແຂວງ",
+        "search_district":"ເມືອງ",
+        "search_category":"ໝວດໝູ່"
+    }
+}

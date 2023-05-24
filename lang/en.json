@@ -1,0 +1,6 @@
+{
+    "button": {
+      "search":"ຄົ້ນຫາ"
+    },
+    "description": "Nuxt 3 + Tailwind + Eslint + i18n + Sentry Starter"
+}
